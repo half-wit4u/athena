@@ -1,0 +1,437 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.sarf</groupId>
+	<artifactId>MyWebSocketApp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>MyWebSocketApp</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<!-- <configuration> <warName>MySpringData</warName> <outputDirectory>D:\Java\jboss\standalone\deployments</outputDirectory> 
+					</configuration> -->
+			</plugin>
+		</plugins>
+		<finalName>MyWebSocketApp</finalName>
+	</build>
+
+
+
+	<properties>
+		<version.spring>4.3.2.RELEASE</version.spring>
+		<version.spring.security>4.1.3.RELEASE</version.spring.security>
+		<version.spring.jpa>1.5.1.RELEASE</version.spring.jpa>
+
+		<version.javax.validation>1.1.0.Final</version.javax.validation>
+		<version.cxf>3.1.8</version.cxf>
+		<version.activemq>5.11.0</version.activemq>
+		<version.aspectj>1.8.1</version.aspectj>
+		<version.jackson.v2>2.6.3</version.jackson.v2>
+		<version.logback>1.1.2</version.logback>
+		<version.maven>3.0.5</version.maven>
+		<!-- Aspect -->
+		<version.aopalliance>1.0</version.aopalliance>
+		<!-- DB in-memory -->
+		<version.hsql>2.3.3</version.hsql>
+		<!-- Hibernate -->
+		<version.hibernate>4.3.1.Final</version.hibernate>
+		<version.hibernate.jpa20>1.0.1.Final</version.hibernate.jpa20>
+		<!-- Testing -->
+		<version.selenium>2.42.2</version.selenium>
+		<version.fest>1.4</version.fest>
+		<!-- Misc -->
+		<version.jodatime>2.9.1</version.jodatime>
+		<version.dozer>5.5.1</version.dozer>
+		<version.email>1.6.18</version.email>
+
+	</properties>
+
+
+
+
+
+
+	<dependencies>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${version.spring}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+
+		<!-- Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${version.spring.security}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${version.spring.security}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${version.spring.security}</version>
+		</dependency>
+
+		<!-- Spring -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-oxm</artifactId> 
+			<version>${version.spring}</version> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-orm</artifactId> <version>${version.spring}</version> 
+			</dependency> -->
+
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-beans</artifactId> 
+			<version>${version.spring}</version> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-jdbc</artifactId> <version>${version.spring}</version> 
+			</dependency> -->
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+		<!-- <dependency> <groupId>org.springframework.data</groupId> <artifactId>spring-data-commons-core</artifactId> 
+			<version>1.4.1.RELEASE</version> </dependency> -->
+
+
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-jms</artifactId> 
+			<version>${version.spring}</version> </dependency> -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-aop</artifactId> 
+			<version>${version.spring}</version> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-expression</artifactId> <version>${version.spring}</version> 
+			</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-test</artifactId> 
+			<version>${version.spring}</version> <scope>test</scope> </dependency> < 
+			<dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-config</artifactId> 
+			<version>${version.spring.security}</version> </dependency> -->
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${version.spring.jpa}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jcl-over-slf4j</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Aspect -->
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+			<version>${version.aopalliance}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${version.aspectj}</version>
+		</dependency>
+
+		<!-- REST -->
+
+		<!-- <dependency> <groupId>org.apache.cxf</groupId> <artifactId>cxf-rt-rs-extension-providers</artifactId> 
+			<version>${version.cxf}</version> <exclusions> <exclusion> <groupId>org.apache.geronimo.specs</groupId> 
+			<artifactId>geronimo-javamail_1.4_spec</artifactId> </exclusion> </exclusions> 
+			</dependency> -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-wsdl</artifactId>
+			<version>${version.cxf}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+			<version>${version.cxf}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-policy</artifactId>
+			<version>${version.cxf}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-rs-client</artifactId>
+			<version>${version.cxf}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>${version.jackson.v2}</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
+			<version>${version.javax.validation}</version> </dependency> <dependency> 
+			<groupId>org.aspectj</groupId> <artifactId>aspectjrt</artifactId> <version>1.8.2</version> 
+			</dependency> <dependency> <groupId>org.aspectj</groupId> <artifactId>aspectjtools</artifactId> 
+			<version>1.8.2</version> </dependency> -->
+		<!-- <dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>httpclient</artifactId> 
+			<version>4.5.1</version> <exclusions> <exclusion> <groupId>org.apache.httpcomponents</groupId> 
+			<artifactId>httpclient</artifactId> </exclusion> </exclusions> </dependency> 
+			<dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> 
+			<version>18.0</version> </dependency> -->
+
+		<!-- ActiveMQ -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-kahadb-store</artifactId>
+			<version>${version.activemq}</version>
+		</dependency>
+
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${version.hibernate}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.logging</groupId>
+					<artifactId>jboss-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${version.hibernate}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.logging</groupId>
+					<artifactId>jboss-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${version.hibernate}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>${version.hibernate.jpa20}</version>
+		</dependency>
+
+		<!-- Test -->
+		<!-- <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId> 
+			<version>${version.selenium}</version> <scope>test</scope> </dependency> -->
+		<!-- <dependency> <groupId>org.easytesting</groupId> <artifactId>fest-assert</artifactId> 
+			<version>${version.fest}</version> <scope>test</scope> </dependency> -->
+		<!-- Logback is used as log manager in the unit test but should never be 
+			used outside the scope test -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${version.logback}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Misc -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${version.jodatime}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>${version.jackson.v2}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+			<version>${version.dozer}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+
+
+
+		<!-- Caused by: java.lang.ClassCastException: org.dom4j.DocumentFactory 
+			cannot be cast to org.dom4j.DocumentFactory -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+
+
+
+		<!-- database in-memory -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>${version.hsql}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.194</version>
+		</dependency>
+
+
+
+		<!-- Spring Data Mongo Support -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.10.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.4.2</version>
+		</dependency>
+		<dependency>
+
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>1.13.3.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>2.2.4.RELEASE</version>
+		</dependency>
+
+
+		<!-- <dependency> <groupId>org.springframework.data</groupId> <artifactId>spring-data-commons-core</artifactId> 
+			<version>1.3.2.RELEASE</version> </dependency> -->
+
+
+
+		<dependency>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-rules-core</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-rules-mvel</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jeasy</groupId>
+			<artifactId>easy-rules-support</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<!-- Thanks for using https://jar-download.com -->
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.3.30.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>4.3.30.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.websocket/javax.websocket-api -->
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+
+	</dependencies>
+
+</project>
