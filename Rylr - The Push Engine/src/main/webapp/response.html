@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='throwback'>
+<head>
+<meta charset="UTF-8">
+<title>Sample Request/Response - Async Mode</title>
+
+<style>
+</style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+
+
+<script>
+angular.module('throwback', []).
+  directive('blink', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: {},
+      controller: function($scope, $element) {
+          var blinker = $element[0]
+          setInterval(function() {
+			  blinker.style.visibility = ((blinker.style.visibility == 'visible') ? 'hidden' : 'visible');
+			  
+          },500);
+      },
+      template:
+        '<span ng-transclude class="test"></span>',
+      replace: true
+    };
+  });
+  
+var testApp = angular.module("throwback", []);
+
+testApp.controller("testController", function($scope, $http) {
+  
+  //    Our POST request function
+  $scope.postRequest = function() {
+	  
+	 var clientId = document.getElementById("clientId").value; 
+	 var msg = document.getElementById("inputId").value;
+	 console.log(msg);
+	 var data = JSON.stringify({  
+         data: msg,
+         clientId : clientId
+     }); 
+	 
+	console.log(data);
+	  
+    $http.post("http://localhost:88/MyRylr/rs/pushengine/process", data).then(
+      function successCallback(response) {
+        console.log("Successfully POST-ed data");
+        //alert('SUCCESS');
+      },
+      function errorCallback(response) {
+        console.log("POST-ing of data failed");
+        alert('FAILED');
+      }
+    );
+  };
+});
+  
+</script>
+
+
+</head>
+<body ng-controller="testController">
+
+	<script>  
+  
+	
+    function connect1(data)
+    {
+    var socket;  
+    // Determine whether the current browser supports webSocket  
+    if(window.WebSocket){  
+        socket = new WebSocket("ws://localhost:89/ws")  
+        // Equivalent to the read event of the channel, ev receives the message sent back by the server  
+        socket.onmessage = function (ev) {  
+    		// alert(ev.data);
+			console.log("Data +"+ev.data);
+			var responseDiv = document.getElementById("blink1");
+			responseDiv.innerHTML  = "<blink>"+ev.data+"</blink>";
+			
+        }  
+        // Equivalent to connection on  
+        socket.onopen = function (ev) { 
+            // alert(ev);		
+	     		console.log(ev);
+            	var clientId = document.getElementById("clientId");
+				var contex = document.getElementById("contex");
+         socket.send(  
+                JSON.stringify({  
+                    // The connection succeeds. The user ID is passed to the server  
+                    clientId: clientId.value,
+					context : contex.value
+					
+                })  
+            );  
+        }  
+        // Equivalent to connection closing  
+        socket.onclose = function (ev) {  
+            console.log("Connection closed...");  
+        }  
+    }else{  
+        alert("Current browser does not support webSocket")  
+    }
+
+	if(data=='update'){
+	
+	var clientId = document.getElementById("clientId");
+				var contex = document.getElementById("contex");
+            socket.send(  
+                JSON.stringify({  
+                    // The connection succeeds. The user ID is passed to the server  
+                    clientId: clientId.value,
+					context : contex.value
+					
+                })  
+            ); 
+	
+   }
+   }
+
+    
+</script>
+
+<form onsubmit="return false"></form>
+<H1> Client </H1>
+<table border = "1">
+	<tbody>
+		 <tr>
+		    <th>Client</th>
+		    <th>Context</th>
+		    <th></th>
+		    <th>Input</th>
+		    <th></th>
+		    <th>Response</th>
+	  	</tr>
+		<tr>
+			<td> Client ID : <input id="clientId"/> </td>
+			<td>Client Context : <input id="contex"/> </td>
+			<td> <input type="button" value="Connect" onclick="connect1('')"> <br/></td>
+			<td> <input type="text" id="inputId" /></td>
+			 <td>
+			 <input type="button" ng-click="postRequest()" value="Update" />  
+			</td>
+			<td>
+			<div id="data1">
+				<blink id="blink1">Async Response Here..</blink>
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+	
+</body>
+</html>

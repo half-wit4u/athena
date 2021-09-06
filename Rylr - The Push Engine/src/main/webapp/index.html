@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='throwback'>
+<head>
+<meta charset="UTF-8">
+<title>Sample Push Client Listener</title>
+
+<style>
+</style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+
+
+<script>
+angular.module('throwback', []).
+  directive('blink', function() {
+    return {
+      restrict: 'E',
+      transclude: true,
+      scope: {},
+      controller: function($scope, $element) {
+          var blinker = $element[0]
+          setInterval(function() {
+			  blinker.style.visibility = ((blinker.style.visibility == 'visible') ? 'hidden' : 'visible');
+			  
+          },500);
+      },
+      template:
+        '<span ng-transclude class="test"></span>',
+      replace: true
+    };
+  });
+  </script>
+
+
+</head>
+<body>
+
+	<script>  
+  
+	
+    function connect1(data)
+    {
+    var socket;  
+    // Determine whether the current browser supports webSocket  
+    if(window.WebSocket){  
+        socket = new WebSocket("ws://localhost:89/ws")  
+        // Equivalent to the read event of the channel, ev receives the message sent back by the server  
+        socket.onmessage = function (ev) {  
+            var rt = document.getElementById("responseText");  
+            rt.value = rt.value + "\n" + ev.data;  
+			
+			
+			var data1 = document.getElementById("blink1"); 
+			data1.innerHTML  = "<blink>"+ev.data+"</blink>";
+			
+			var randomColor = Math.floor(Math.random()*16777215).toString(16);
+			data1.style.backgroundColor = '#'+randomColor;
+			
+			// alert(ev.data);
+			console.log("Data +"+data);
+        }  
+        // Equivalent to connection on  
+        socket.onopen = function (ev) { 
+            // alert(ev);		
+			console.log(ev);
+            var rt = document.getElementById("responseText");  
+            rt.value =  "Connection turned on..."  
+            	var clientId = document.getElementById("clientId");
+				var contex = document.getElementById("contex");
+            socket.send(  
+                JSON.stringify({  
+                    // The connection succeeds. The user ID is passed to the server  
+                    clientId: clientId.value,
+					context : contex.value
+					
+                })  
+            );  
+        }  
+        // Equivalent to connection closing  
+        socket.onclose = function (ev) {  
+            var rt = document.getElementById("responseText");  
+            rt.value = rt.value + "\n" + "Connection closed...";  
+        }  
+    }else{  
+        alert("Current browser does not support webSocket")  
+    }
+
+	if(data=='update'){
+	
+	var clientId = document.getElementById("clientId");
+				var contex = document.getElementById("contex");
+            socket.send(  
+                JSON.stringify({  
+                    // The connection succeeds. The user ID is passed to the server  
+                    clientId: clientId.value,
+					context : contex.value
+					
+                })  
+            ); 
+	
+   }
+   }
+   
+    function connect2(data)
+    {
+    var socket;  
+    // Determine whether the current browser supports webSocket  
+    if(window.WebSocket){  
+        socket = new WebSocket("ws://localhost:89/ws")  
+        // Equivalent to the read event of the channel, ev receives the message sent back by the server  
+        socket.onmessage = function (ev) {  
+            var rt = document.getElementById("responseText2");  
+			rt.value = rt.value + "\n" + ev.data;  
+			
+			
+			
+			var data2 = document.getElementById("blink2"); 
+			data2.innerHTML  = "<blink>"+ev.data+"</blink>";
+			console.log("Data +"+ev.data);
+			
+			var randomColor = Math.floor(Math.random()*16777215).toString(16);
+			data2.style.backgroundColor = '#'+randomColor;
+			
+			
+			
+        }  
+        // Equivalent to connection on  
+        socket.onopen = function (ev) { 
+            // alert(ev);		
+			console.log(ev);
+            var rt = document.getElementById("responseText2");  
+            rt.value =  "Connection turned on..."  
+            	var clientId = document.getElementById("clientId2");
+				var contex = document.getElementById("contex2");
+            socket.send(  
+                JSON.stringify({  
+                    // The connection succeeds. The user ID is passed to the server  
+                    clientId: clientId.value,
+					context : contex.value
+					
+                })  
+            );  
+        }  
+        // Equivalent to connection closing  
+        socket.onclose = function (ev) {  
+            var rt = document.getElementById("responseText2");  
+            rt.value = rt.value + "\n" + "Connection closed...";  
+        }  
+    }else{  
+        alert("Current browser does not support webSocket")  
+    }  
+	
+	if(data=='update'){
+	
+	var clientId = document.getElementById("clientId");
+				var contex = document.getElementById("contex");
+            socket.send(  
+                JSON.stringify({  
+                    // The connection succeeds. The user ID is passed to the server  
+                    clientId: clientId.value,
+					context : contex.value
+					
+                })  
+            ); 
+	
+   }
+	
+	
+   }
+  
+</script>
+<form onsubmit="return false"></form>
+<H1> Rylr Client </H1>
+<table border = "1">
+	<tbody>
+		 <tr>
+		    <th>Client</th>
+		    <th>Context</th>
+		    <th></th>
+		    <th></th>
+		    <th>This is flight grid ;)</th>
+		    <th>Last Update</th>
+	  	</tr>
+		<tr>
+			<td> Client ID : <input id="clientId"/> </td>
+			<td>Client Context : <input id="contex"/> </td>
+			<td> <input type="button" value="Connect" onclick="connect1('')"> <br/></td>
+			<td> <input type="button" value="Update Context" onclick="connect1('update')"> <br/></td>
+			<td><textarea id="responseText" style="height: 150px; width: 300px;"></textarea>
+			<input type="button" value="Empty content" 	onclick="document.getElementById('responseText').value=''">  </td>
+			<td>
+			<div id="data1">
+				<blink id="blink1">Latest Message.....</blink>
+			</div>
+			</td>
+			
+		</tr>
+		<tr>
+			<td> Client ID : <input id="clientId2"/> </td>
+			<td>Client Context : <input id="contex2"/> </td>
+			<td> <input type="button" value="Connect" onclick="connect2('')"> <br/></td>
+			<td> <input type="button" value="Update Context" onclick="connect2('update')"> <br/></td>
+			<td><textarea id="responseText2" style="height: 150px; width: 300px;"></textarea>
+			<input type="button" value="Empty content" 	onclick="document.getElementById('responseText2').value=''">  </td>
+			<td>
+			<div id="data2">
+				<blink id="blink2">Latest Message...</blink>
+			</div>
+			</td>
+			
+		</tr>
+	</tbody>
+</table>
+
+		
+
+		
+		
+		
+		
+		
+
+	
+</body>
+</html>
